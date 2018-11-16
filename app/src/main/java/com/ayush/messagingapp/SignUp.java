@@ -104,6 +104,7 @@ public class SignUp extends AppCompatActivity {
                         progressDialog =  new ProgressDialog(SignUp.this);
                         progressDialog.setMessage("Creating a New Account");
                         progressDialog.show();
+
                         //Creating account using createUserWithEmailAndPassword
                         firebaseAuth.createUserWithEmailAndPassword(userEmail,userPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
@@ -120,6 +121,7 @@ public class SignUp extends AppCompatActivity {
                             @Override
                             public void onFailure(@NonNull Exception e) {
                                 progressDialog.dismiss();
+                                //To get the exact error
                                 displayToast(e.toString());
                             }
                         });
