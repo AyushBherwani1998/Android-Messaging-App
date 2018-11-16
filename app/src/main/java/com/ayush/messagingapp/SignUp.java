@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -22,6 +23,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Objects;
+import java.util.regex.Pattern;
 
 public class SignUp extends AppCompatActivity {
     private EditText mUserEmail;
@@ -97,10 +99,10 @@ public class SignUp extends AppCompatActivity {
         final String userPassword = mUserPassword.getText().toString().trim();
         final String confirmPassword = mUserConfirmPassword.getText().toString().trim();
 
-        if(!TextUtils.isEmpty(userEmail)){
+        if(!TextUtils.isEmpty(userEmail) && Patterns.EMAIL_ADDRESS.matcher(userEmail).matches()){
             if(!TextUtils.isEmpty(userName)){
                 if(!TextUtils.isEmpty(userPassword)){
-                    if(userPassword.equals(confirmPassword)){
+                    if(userPassword.equals(confirmPassword) && !TextUtils.isEmpty(confirmPassword)){
                         progressDialog =  new ProgressDialog(SignUp.this);
                         progressDialog.setMessage("Creating a New Account");
                         progressDialog.show();
@@ -127,16 +129,23 @@ public class SignUp extends AppCompatActivity {
                         });
 
                     }else{
-                        displayToast("Password and Confirm password does not match");
+                        mUserConfirmPassword.requestFocus();
+                        mUserConfirmPassword.getText().clear();
+                        mUserPassword.getText().clear();
+                        mUserPassword.setError("Passwords does not match");
+                        mUserConfirmPassword.setError("Passwords does not match");
                     }
                 }else {
-                    displayToast("Password field can not be Empty");
+                    mUserPassword.requestFocus();
+                    mUserPassword.setError("Password field can not be Empty");
                 }
             }else{
-                displayToast("Name field can not be Empty");
+                mUserName.requestFocus();
+                mUserName.setError("Name field can not be Empty");
             }
         }else{
-            displayToast("Email field can not be Empty");
+            mUserEmail.requestFocus();
+            mUserEmail.setError("Enter a valid Email");
         }
 
 

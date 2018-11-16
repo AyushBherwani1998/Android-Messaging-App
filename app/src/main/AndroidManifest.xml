@@ -27,7 +27,8 @@
         <activity
             android:name=".SignUp"
             android:parentActivityName=".Login_Screen"
-            android:theme = "@style/Theme.AppCompat.Light.NoActionBar"/>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity android:name=".Profile_Picture"></activity>
     </application>
 
 </manifest>
